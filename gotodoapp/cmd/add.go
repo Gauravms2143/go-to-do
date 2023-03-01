@@ -7,6 +7,8 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
+
+	"github.com/Gauravms2143/go-to-do/gotodoapp/todo"
 )
 
 // addCmd represents the add command
@@ -23,9 +25,11 @@ var addCmd = &cobra.Command{
 * input arguments.
  */
 func addRun(cmd *cobra.Command, arg []string) {
+	items := []todo.Item{}
 	for _, value := range arg {
-		fmt.Println(value)
+		items = append(items, todo.Item{Text: value})
 	}
+	fmt.Printf("%#v\n", items)
 }
 
 /**
