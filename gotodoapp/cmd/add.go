@@ -5,6 +5,8 @@ package cmd
 
 import (
 	"fmt"
+	"log"
+	"os"
 
 	"github.com/spf13/cobra"
 
@@ -25,11 +27,24 @@ var addCmd = &cobra.Command{
 * input arguments.
  */
 func addRun(cmd *cobra.Command, arg []string) {
-	items := []todo.Item{}
+	//items := []todo.Item{}
+	//Read data from file.
+	//dataFile is flag, This is custome flag which we have created in
+	//application(for more detail see root.go file).
+	items, err := todo.ReadItems(dataFile)
+	if err != nil {
+		log.Printf("Internal Error : %v", err)
+		os.Exit(-1)
+	}
+
 	for _, value := range arg {
 		items = append(items, todo.Item{Text: value})
 	}
-	fmt.Printf("%#v\n", items)
+	//fmt.Printf("%#v\n", items)
+	err1 := todo.SavedItems(dataFile, items)
+	if err1 != nil {
+		fmt.Errorf("%v", err1)
+	}
 }
 
 /**
