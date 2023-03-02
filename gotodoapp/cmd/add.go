@@ -47,6 +47,8 @@ func addRun(cmd *cobra.Command, arg []string) {
 	}
 }
 
+var priority int
+
 /**
 * init() is special function,its called after package variable declaration.
 * each package may have multiple init().
@@ -54,7 +56,7 @@ func addRun(cmd *cobra.Command, arg []string) {
  */
 func init() {
 	rootCmd.AddCommand(addCmd)
-
+	addCmd.Flags().IntVarP(&priority, "priority", "p", 2, "Priority:1,2,3")
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
