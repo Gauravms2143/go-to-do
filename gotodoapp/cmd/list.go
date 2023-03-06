@@ -45,7 +45,7 @@ func listRun(cmd *cobra.Command, args []string) {
 	//The Fprintln function is used to write the formatted text to
 	//the tabwriter, followed by a newline character ("\n").
 	for _, todo := range items {
-		fmt.Fprintln(w, todo.PrettyP()+"\t"+todo.Text+"\t")
+		fmt.Fprintln(w, todo.Label()+"\t"+todo.PrettyP()+"\t"+todo.Text+"\t")
 	}
 
 	// flushes any buffered data from the tabwriter w, ensuring

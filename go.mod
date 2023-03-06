@@ -3,6 +3,7 @@ module github.com/Gauravms2143/go-to-do
 go 1.20
 
 require (
+	github.com/hashicorp/hcl v1.0.0
 	github.com/inconshreveable/mousetrap v1.0.1 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/spf13/cobra v1.6.1 // indirect

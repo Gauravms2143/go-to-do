@@ -5,11 +5,19 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strconv"
+	//"github.com/hashicorp/hcl/hcl/strconv"
 )
 
 type Item struct {
 	Text     string
 	Priority int
+	position int
+}
+
+func (i *Item) Label() string {
+	//convert Integer to ASCII.
+	return strconv.Itoa(i.position) + "."
 }
 
 func (i *Item) SetPriority(pri int) {
@@ -74,5 +82,10 @@ func ReadItems(filename string) ([]Item, error) {
 		//fmt.Println("Error while parsing Data.")
 		return []Item{}, err
 	}
+
+	for index, _ := range items {
+		items[index].position = index + 1
+	}
+
 	return items, nil
 }
