@@ -23,6 +23,16 @@ func (i *Item) SetPriority(pri int) {
 	}
 }
 
+func (i *Item) PrettyP() string {
+	if i.Priority == 1 {
+		return "(1)"
+	}
+	if i.Priority == 2 {
+		return "(2)"
+	}
+	return " "
+}
+
 func SavedItems(filename string, items []Item) error {
 	//Converting struct data to json data.
 	jsonData, err := json.Marshal(items)
@@ -59,6 +69,7 @@ func ReadItems(filename string) ([]Item, error) {
 	}
 	var items []Item
 	//converting json data to Item struct formate.
+	// Note : We are taking &items instead of items and storing accordingly.
 	if err := json.Unmarshal(content, &items); err != nil {
 		//fmt.Println("Error while parsing Data.")
 		return []Item{}, err
