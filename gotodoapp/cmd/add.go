@@ -31,6 +31,7 @@ func addRun(cmd *cobra.Command, arg []string) {
 	//Read data from file.
 	//dataFile is flag, This is custome flag which we have created in
 	//application(for more detail see root.go file).
+
 	items, err := todo.ReadItems(dataFile)
 	if err != nil {
 		log.Printf("Internal Error : %v", err)
@@ -38,7 +39,9 @@ func addRun(cmd *cobra.Command, arg []string) {
 	}
 
 	for _, value := range arg {
-		items = append(items, todo.Item{Text: value})
+		item := todo.Item{Text: value}
+		item.SetPriority(priority)
+		items = append(items, item)
 	}
 	//fmt.Printf("%#v\n", items)
 	err1 := todo.SavedItems(dataFile, items)
