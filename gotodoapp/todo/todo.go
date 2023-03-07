@@ -89,3 +89,32 @@ func ReadItems(filename string) ([]Item, error) {
 
 	return items, nil
 }
+
+//ByPri implements the sort.Interface for []Item based
+//on priority and position feild.
+//This is a code snippet that defines a custom sort order for a slice
+// of Item structs based on their priority and position fields.
+
+// Below New type ByPri, which is a slice of Item structs.
+type ByPri []Item
+
+// //Len() defines a method on the ByPri type,
+// which returns the length of the slice.
+func (s ByPri) Len() int { return len(s) }
+
+// Swap() defines a method on the ByPri type, which
+// swaps the elements at the given indices i and j in the slice.
+func (s ByPri) Swap(i, j int) { s[i], s[j] = s[j], s[i] }
+
+// Less() defines a method on the ByPri type,
+// which compares two elements in the slice at indices i and j,
+// and returns a boolean indicating whether the element at
+// index i is less than the element at index j.
+func (s ByPri) Less(i, j int) bool {
+	//first compare Priority
+	if s[i].Priority == s[j].Priority {
+		//if priority same return result based on position.
+		return s[i].position < s[j].position
+	}
+	return s[i].Priority > s[j].Priority
+}

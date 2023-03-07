@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"sort"
 	"text/tabwriter"
 
 	"github.com/Gauravms2143/go-to-do/gotodoapp/todo"
@@ -29,6 +30,8 @@ func listRun(cmd *cobra.Command, args []string) {
 	if err != nil {
 		log.Printf("%v", err)
 	}
+	//Sort Todo.
+	sort.Sort(todo.ByPri(items))
 
 	//We'll use tab writer to formate todos.
 	//creates a new tabwriter with(Parameter Explanation)-
@@ -51,6 +54,7 @@ func listRun(cmd *cobra.Command, args []string) {
 	// flushes any buffered data from the tabwriter w, ensuring
 	// that all output has been written to the standard output.
 	w.Flush()
+
 }
 
 func init() {
