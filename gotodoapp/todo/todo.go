@@ -12,12 +12,13 @@ import (
 type Item struct {
 	Text     string
 	Priority int
-	position int
+	Position int
+	Done     bool
 }
 
 func (i *Item) Label() string {
 	//convert Integer to ASCII.
-	return strconv.Itoa(i.position) + "."
+	return strconv.Itoa(i.Position) + "."
 }
 
 func (i *Item) SetPriority(pri int) {
@@ -84,7 +85,7 @@ func ReadItems(filename string) ([]Item, error) {
 	}
 
 	for index, _ := range items {
-		items[index].position = index + 1
+		items[index].Position = index + 1
 	}
 
 	return items, nil
@@ -111,10 +112,25 @@ func (s ByPri) Swap(i, j int) { s[i], s[j] = s[j], s[i] }
 // and returns a boolean indicating whether the element at
 // index i is less than the element at index j.
 func (s ByPri) Less(i, j int) bool {
-	//first compare Priority
-	if s[i].Priority == s[j].Priority {
-		//if priority same return result based on position.
-		return s[i].position < s[j].position
+	//Perform check based on status (done or not done)
+	if s[i].Done != s[j].Done {
+		return s[i].Done
 	}
-	return s[i].Priority > s[j].Priority
+	//compare Priority
+	if s[i].Priority != s[j].Priority {
+		//if priority same return result based on position.
+		return s[i].Priority > s[j].Priority
+
+	}
+	return s[i].Position < s[j].Position
+
+}
+
+// Prettydone() will return just To check if todo is done or not.
+// return "X" if done,else "✔"
+func (item *Item) Prettydone() string {
+	if item.Done {
+		return "✔"
+	}
+	return "X"
 }
