@@ -48,7 +48,9 @@ func listRun(cmd *cobra.Command, args []string) {
 	//The Fprintln function is used to write the formatted text to
 	//the tabwriter, followed by a newline character ("\n").
 	for _, todo := range items {
-		fmt.Fprintln(w, todo.Label()+"\t"+todo.Prettydone()+"\t"+todo.PrettyP()+"\t"+todo.Text+"\t")
+		if todo.Done == doneOpt {
+			fmt.Fprintln(w, todo.Label()+"\t"+todo.Prettydone()+"\t"+todo.PrettyP()+"\t"+todo.Text+"\t")
+		}
 	}
 
 	// flushes any buffered data from the tabwriter w, ensuring
@@ -57,9 +59,14 @@ func listRun(cmd *cobra.Command, args []string) {
 
 }
 
+var (
+	doneOpt bool
+)
+
 func init() {
 	rootCmd.AddCommand(listCmd)
 
+	listCmd.Flags().BoolVar(&doneOpt, "done", false, "shown 'Done' Todos.")
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
