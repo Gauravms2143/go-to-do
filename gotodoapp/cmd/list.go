@@ -22,6 +22,11 @@ var listCmd = &cobra.Command{
 	Run:   listRun,
 }
 
+var (
+	doneOpt bool
+	allOpt  bool
+)
+
 func listRun(cmd *cobra.Command, args []string) {
 	//fmt.Println("list called")
 	//dataFile is flag, This is custome flag which we have created in
@@ -48,7 +53,7 @@ func listRun(cmd *cobra.Command, args []string) {
 	//The Fprintln function is used to write the formatted text to
 	//the tabwriter, followed by a newline character ("\n").
 	for _, todo := range items {
-		if todo.Done == doneOpt {
+		if allOpt || todo.Done == doneOpt {
 			fmt.Fprintln(w, todo.Label()+"\t"+todo.Prettydone()+"\t"+todo.PrettyP()+"\t"+todo.Text+"\t")
 		}
 	}
@@ -59,15 +64,12 @@ func listRun(cmd *cobra.Command, args []string) {
 
 }
 
-var (
-	doneOpt bool
-)
-
 func init() {
 	rootCmd.AddCommand(listCmd)
 
 	listCmd.Flags().BoolVar(&doneOpt, "done", false, "shown 'Done' Todos.")
 	// Here you will define your flags and configuration settings.
+	listCmd.Flags().BoolVar(&allOpt, "all", false, "shown 'All' Todos.")
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
